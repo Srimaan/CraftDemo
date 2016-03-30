@@ -8,19 +8,23 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.xml.HasXPath;
 
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Header;
+import com.jayway.restassured.filter.log.LogDetail;
+import com.jayway.restassured.filter.log.RequestLoggingFilter;
+import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.response.Headers;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public abstract class AbstractAPIMethod {
 
+public abstract class AbstractAPIMethod {
+	protected static final Logger LOGGER = Logger.getLogger(AbstractAPIMethod.class);
 	protected String methodPath = null;
 	protected HttpMethodType methodType = null;
 	private StringBuilder bodyContent = null;
@@ -73,11 +77,14 @@ public abstract class AbstractAPIMethod {
 	Headers head = new Headers();
 
 	private String callGET() {
+		LOGGER.info("-------------------------- Sending REQUEST --------------------------\n");
+		request.filter(new RequestLoggingFilter(LogDetail.ALL));
 		Response rs = request.get(methodPath);
+		LOGGER.info("-------------------------- Received RESPONSE --------------------------\n");
+		rs.prettyPeek();
 		head=rs.headers();
 		setTime(rs.getTime());
 		actualRsBody = rs.asString();
-		rs.prettyPrint();
 		return actualRsBody;
 	}
 	
@@ -132,7 +139,6 @@ public abstract class AbstractAPIMethod {
 	public AbstractAPIMethod() {
 		restClient();
 		request = given();
-
 	}
 
 	public void addContentType(String contentType) {

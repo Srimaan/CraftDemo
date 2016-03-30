@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="4632" started-at="2016-03-30T06:13:41Z" finished-at="2016-03-30T06:13:45Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="4632" started-at="2016-03-30T06:13:41Z" finished-at="2016-03-30T06:13:45Z">
+      <class name="com.intuit.nasa.api.tests.planetary.GetPlanetrySoundsTest">
+        <test-method status="PASS" signature="testWhenAPIKeyIsInvalid()[pri:0, instance:com.intuit.nasa.api.tests.planetary.GetPlanetrySoundsTest@6b143ee9]" name="testWhenAPIKeyIsInvalid" duration-ms="2527" started-at="2016-03-29T23:13:41Z" finished-at="2016-03-29T23:13:43Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testWhenAPIKeyIsInvalid -->
+        <test-method status="PASS" signature="testWhenAPIKeyIsMissing()[pri:0, instance:com.intuit.nasa.api.tests.planetary.GetPlanetrySoundsTest@6b143ee9]" name="testWhenAPIKeyIsMissing" duration-ms="834" started-at="2016-03-29T23:13:43Z" finished-at="2016-03-29T23:13:44Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testWhenAPIKeyIsMissing -->
+        <test-method status="PASS" signature="testWhenAPIKeyIsValid()[pri:0, instance:com.intuit.nasa.api.tests.planetary.GetPlanetrySoundsTest@6b143ee9]" name="testWhenAPIKeyIsValid" duration-ms="1257" started-at="2016-03-29T23:13:44Z" finished-at="2016-03-29T23:13:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testWhenAPIKeyIsValid -->
+      </class> <!-- com.intuit.nasa.api.tests.planetary.GetPlanetrySoundsTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
