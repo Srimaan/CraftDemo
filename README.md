@@ -30,11 +30,13 @@
     * Assuming that we have already sent 40 Requests from the Same IP Address (DEMO_KEY Limit is 40).
     * Verify that Response Header has X-RateLimit-Limit:40 and X-RateLimit-Remaining:0
      
-<h4> 6. Test with Valid API_KEY without Query Parameter </h4>
-     Example : <https://api.nasa.gov/planetary/sounds?api_key=79U7LZO3OguHmTUfdN4UhOUVZOgMzzZwITEST>
+<h4> 6. Test with Valid API_KEY and Invalid Query Parameter value (junk) </h4>
+     Example : <https://api.nasa.gov/planetary/sounds?api_key=79U7LZO3OguHmTUfdN4UhOUVZOgMzzZwITEST&q=junk
     * Verify that HTTP Response Status Code as 200.
-    * Verify that Response is against JSON Schema.
-    * Verify that Response doesn't have any Error message
-    * Verify that Response Header has X-RateLimit-Limit:1000 and X-RateLimit-Remaining:997
-    * Verify that Response Header has X-RateLimit-Remaining decrement by 1  
+    * Verify that Response count is 0.
+  
+<h4> 7. Test with Valid API_KEY and Invalid Query Parameter Key (instead of q say z </h4>
+     Example : <https://api.nasa.gov/planetary/sounds?api_key=79U7LZO3OguHmTUfdN4UhOUVZOgMzzZwITEST&z=apollo
+    * Verify that HTTP Response Status Code as 400 or 404.
     
+ 
