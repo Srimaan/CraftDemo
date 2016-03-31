@@ -1,4 +1,4 @@
-package com.intuit.nasa.api.planetary;
+package com.intuit.nasa.api.planetary.sounds;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

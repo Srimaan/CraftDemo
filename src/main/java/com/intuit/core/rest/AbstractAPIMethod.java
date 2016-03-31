@@ -5,6 +5,9 @@ import static com.jayway.restassured.RestAssured.given;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Properties;
 
@@ -17,7 +20,6 @@ import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.LogDetail;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
-import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.response.Headers;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
@@ -33,19 +35,16 @@ public abstract class AbstractAPIMethod {
 	public String actualRsBody;
 
 	public void validateResponseAgainstJSONSchema(String schemaPath) {
-
+		try {
 		if (actualRsBody == null) {
 			throw new RuntimeException(
 					"Actual response body is null. Pleae make API call before validation response");
 		}
-		File file;
-		try {
-		 file = new File(schemaPath);
-			JsonValidationUtils.validateJson(file, actualRsBody);
+		URL input = getClass().getClassLoader().getResource(schemaPath);
+		JsonValidationUtils.validateJson(input, actualRsBody);
 		} catch (IOException | ProcessingException ex) {
 			ex.printStackTrace();
 		} 
-
 	}
 
 	public void replaceUrlPlaceholder(String placeholder, String value) {
@@ -75,11 +74,11 @@ public abstract class AbstractAPIMethod {
 	}
 	
 	Headers head = new Headers();
-
+	Response rs;
 	private String callGET() {
 		LOGGER.info("-------------------------- Sending REQUEST --------------------------\n");
 		request.filter(new RequestLoggingFilter(LogDetail.ALL));
-		Response rs = request.get(methodPath);
+		rs = request.get(methodPath);
 		LOGGER.info("-------------------------- Received RESPONSE --------------------------\n");
 		rs.prettyPeek();
 		head=rs.headers();
@@ -92,10 +91,9 @@ public abstract class AbstractAPIMethod {
 		return head;
 	}
 
-	public String getRateLimitRemaining(){
-		return head.getValue("X-RateLimit-Remaining");
+	public int getRateLimitRemaining(){
+		return Integer.parseInt(head.getValue("X-RateLimit-Remaining"));
 	}
-
 	private void setTime(long time) {
 		this.time = time;
 	}
@@ -112,6 +110,7 @@ public abstract class AbstractAPIMethod {
 		InputStream input = getClass().getClassLoader().getResourceAsStream(propFileName);
 		String typePath = getClass().getSimpleName();
 		if (input != null) {
+			
 			try {
 				prop.load(input);
 			} catch (IOException e) {
@@ -145,7 +144,7 @@ public abstract class AbstractAPIMethod {
 		request.contentType(contentType);
 	}
 
-	public void addUrlParameter(String key, String value) {
+	public void addQueryParameter(String key, String value) {
 		if (value != null) {
 			request.queryParam(key, value);
 		}
@@ -174,21 +173,8 @@ public abstract class AbstractAPIMethod {
 				Matchers.containsString(status.getMessage()));
 	}
 
-	public <T> void expectResponseContains(Matcher<T> key, Matcher<T> value) {
-		request.expect().body(key, value);
-	}
 
-	public void expectValueByXpath(String xPath, String value) {
-		request.expect().body(Matchers.hasXPath(xPath),
-				Matchers.containsString(value));
-	}
 
-	public void expectValueByXpath(String xPath, String value1, String value2) {
-		request.expect().body(
-				Matchers.hasXPath(xPath),
-				Matchers.anyOf(Matchers.containsString(value1),
-						Matchers.containsString(value2)));
-	}
 
 	public <T> void expectResponseContains(Matcher<T> value) {
 		request.expect().body(value);

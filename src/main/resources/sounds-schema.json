@@ -1,0 +1,73 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"count": {
+			"type":"number",
+			"id": "http://jsonschema.net/count",
+			"required":false
+		},
+		"results": {
+			"type":"array",
+			"id": "http://jsonschema.net/results",
+			"required":false,
+			"items":
+				{
+					"type":"object",
+					"id": "http://jsonschema.net/results/0",
+					"required":false,
+					"properties":{
+						"description": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/description",
+							"required":false
+						},
+						"download_url": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/download_url",
+							"required":false
+						},
+						"duration": {
+							"type":"number",
+							"id": "http://jsonschema.net/results/0/duration",
+							"required":false
+						},
+						"id": {
+							"type":"number",
+							"id": "http://jsonschema.net/results/0/id",
+							"required":false
+						},
+						"last_modified": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/last_modified",
+							"required":false
+						},
+						"license": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/license",
+							"required":false
+						},
+						"stream_url": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/stream_url",
+							"required":false
+						},
+						"tag_list": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/tag_list",
+							"required":false
+						},
+						"title": {
+							"type":"string",
+							"id": "http://jsonschema.net/results/0/title",
+							"required":false
+						}
+					}
+				}
+			
+
+		}
+	}
+}
