@@ -5,7 +5,6 @@
     <classes>
       <class name="com.intuit.nasa.api.tests.planetary.GetPlanetrySoundsTest">
         <methods>
-          <include name="testWhenAPIKeyIsDemoAndLimit"/>
           <include name="testWhenAPIKeyIsValid_WithInvalidQueryParamValue"/>
           <include name="writeLimit"/>
           <include name="testWhenAPIKeyIsValid_WithInvalidQueryParamKey"/>
